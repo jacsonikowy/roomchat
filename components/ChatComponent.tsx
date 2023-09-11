@@ -25,6 +25,10 @@ const ChatComponent = ({ data }: { data: IData[] }) => {
       setMessages((prev) => [...prev, data]);
     });
 
+    scrollBottom.current?.scrollIntoView({
+      behavior: "smooth",
+    });
+
     return () => {
       pusher.unsubscribe("message");
     };
@@ -37,7 +41,7 @@ const ChatComponent = ({ data }: { data: IData[] }) => {
   }, [messages]);
 
   return (
-    <main className="p-10 h-screen">
+    <main className="p-10 h-screen pb-20">
       <div className="w-full flex justify-between pb-8">
         <h1 className="text-4xl font-bold">
           Room<span className="text-[#00b086]">chat</span>
@@ -46,8 +50,8 @@ const ChatComponent = ({ data }: { data: IData[] }) => {
           <UserButton afterSignOutUrl="/" />
         </div>
       </div>
-      <div className="flex h-[80%] w-full ">
-        <div className="w-full overflow-y-scroll flex flex-col gap-4">
+      <div className="flex flex-col justify-between h-full w-full ">
+        <div className="w-full overflow-y-scroll flex flex-col gap-4 p-4">
           {messages.map((message) => {
             console.log(message);
             return (
@@ -62,7 +66,7 @@ const ChatComponent = ({ data }: { data: IData[] }) => {
           })}
           <div ref={scrollBottom}></div>
         </div>
-        <div className="absolute bottom-8 left-0 px-10 w-full flex place-content-end">
+        <div className="py-10 w-full flex place-content-end">
           <Form />
         </div>
       </div>

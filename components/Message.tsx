@@ -18,26 +18,26 @@ const Message = ({
       <div className="flex items-center gap-4">
         <Image
           className="rounded-full"
-          width={80}
-          height={80}
+          width={40}
+          height={40}
           alt="someguy"
           src={userImg}
         />
-        <div className="rounded-full text-black bg-slate-200 p-6">
-          <p>{text}</p>
+        <div className="rounded-full text-black bg-slate-200 p-4">
+          <p className="text-sm">{text}</p>
         </div>
       </div>
     );
   }
   return (
     <div className="flex items-center gap-4 justify-end">
-      <div className="rounded-full text-black bg-slate-200 p-6">
-        <p>{text}</p>
+      <div className="rounded-full text-black bg-slate-200 p-4">
+        <p className="text-sm">{text}</p>
       </div>
       <Image
         className="rounded-full"
-        width={80}
-        height={80}
+        width={40}
+        height={40}
         alt="someguy"
         src={userImg}
       />

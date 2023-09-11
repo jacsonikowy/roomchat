@@ -1,6 +1,12 @@
-import { SignIn } from "@clerk/nextjs";
+import { SignIn, currentUser } from "@clerk/nextjs";
+import { redirect } from "next/navigation";
 
-export default function Home() {
+export default async function Home() {
+  const user = await currentUser();
+  if (user) {
+    redirect("/chat");
+  }
+
   return (
     <main className="p-10 w-full h-screen">
       <div>
