@@ -1,9 +1,10 @@
 "use client";
-import React, { HTMLAttributes } from "react";
+import React, { HTMLAttributes, useState } from "react";
 import { Icons } from "./Icons";
 import { postData } from "@/lib/postData";
 import { useRef } from "react";
 import * as z from "zod";
+import axios from "axios";
 
 interface IForm extends HTMLAttributes<HTMLFormElement> {}
 
@@ -20,25 +21,20 @@ const validationSchema = z.object({
 
 const Form: React.FC<IForm> = ({ ...props }) => {
   const formRef = useRef<HTMLFormElement>(null);
+  const [message, setMessage] = useState("");
+
+  const handleSend = (messageToSend: string) => {
+    axios.post("/api/message/send", { message: messageToSend });
+  };
+
   return (
     <form
       className="flex items-center gap-3 w-full"
-      action={async (formData) => {
-        const newMessage = {
-          message: formData.get("message"),
-        };
-        const result = validationSchema.safeParse(newMessage);
-
-        if (!result.success) {
-          console.log(result.error.issues[0].message);
-          return;
-        }
-
-        await postData(formData);
-        formRef.current?.reset();
-      }}
       ref={formRef}
-      onSubmit={() => {}}
+      onSubmit={(e) => {
+        e.preventDefault();
+        handleSend(message);
+      }}
       {...props}
     >
       <input
@@ -46,6 +42,9 @@ const Form: React.FC<IForm> = ({ ...props }) => {
         type="text"
         name="message"
         placeholder="Type here something"
+        onChange={(e) => {
+          setMessage(e.currentTarget.value);
+        }}
       />
       <button type="submit">
         <Icons.send />
